@@ -1,26 +1,20 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "jotunn",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Jötunn",
+	"description": "Fabric client library for precise, yet performant, combat & combat-adjacent calculations.",
 	"authors": [
-		"Me!"
+		"Crosby"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/RacoonDog/fabric-mod-template"
+		"sources": "https://github.com/CrosbyDev/Jotunn"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"com.example.ExampleMod"
-		]
-	},
+	"icon": "assets/jotunn/icon.png",
+	"environment": "client",
 	"mixins": [
-		"modid.mixins.json"
+		"jotunn.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.0",

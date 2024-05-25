@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "io.github.racoondog.jotunn.impl.mixin.minecraft",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "AttributeContainerMixin",
+    "EntityAttributeInstanceMixin",
+    "EntityEffectParticleEffectAccessor",
+    "LivingEntityAccessor",
+    "ShulkerEntityAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
