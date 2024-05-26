@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(ShulkerEntity.class)
 public interface ShulkerEntityAccessor {
     @Accessor("PEEK_AMOUNT")
-    static TrackedData<Byte> meteor$getPeekAmount() {
+    static TrackedData<Byte> jotunn$getPeekAmount() {
         throw new AssertionError();
     }
 
     @Accessor("COVERED_ARMOR_BONUS")
-    static EntityAttributeModifier meteor$getCoveredArmorBonus() {
+    static EntityAttributeModifier jotunn$getCoveredArmorBonus() {
         throw new AssertionError();
     }
 }

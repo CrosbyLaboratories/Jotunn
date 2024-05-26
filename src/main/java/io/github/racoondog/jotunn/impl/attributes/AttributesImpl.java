@@ -111,9 +111,9 @@ public final class AttributesImpl implements Attributes {
 
     private static void handleSpecialCases(LivingEntity entity, Function<RegistryEntry<EntityAttribute>, EntityAttributeInstance> consumer) {
         if (entity instanceof ShulkerEntity shulkerEntity) {
-            if (shulkerEntity.getDataTracker().get(ShulkerEntityAccessor.meteor$getPeekAmount()) == 0) {
+            if (shulkerEntity.getDataTracker().get(ShulkerEntityAccessor.jotunn$getPeekAmount()) == 0) {
                 @Nullable EntityAttributeInstance attributeInstance = consumer.apply(EntityAttributes.GENERIC_ARMOR);
-                if (attributeInstance != null) attributeInstance.addPersistentModifier(ShulkerEntityAccessor.meteor$getCoveredArmorBonus());
+                if (attributeInstance != null) attributeInstance.addPersistentModifier(ShulkerEntityAccessor.jotunn$getCoveredArmorBonus());
             }
         }
     }

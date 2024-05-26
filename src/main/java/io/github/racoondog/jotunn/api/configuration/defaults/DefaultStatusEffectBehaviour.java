@@ -32,7 +32,7 @@ public class DefaultStatusEffectBehaviour implements StatusEffectBehaviour {
     public List<StatusEffectEntry> handleAbsorption(float absorptionHealth) {
         if (absorptionHealth == 0f) return List.of();
 
-        List<StatusEffectEntry> entries = new ArrayList<>();
+        List<StatusEffectEntry> entries = new ArrayList<>(3);
         if (absorptionHealth <= 16f) entries.add(ABSORPTION_STRONG); // enchanted golden apple
         if (absorptionHealth <= 8f && MultiVersion.getInstance().isAtLeast(MultiVersion.V1_11)) entries.add(ABSORPTION_MEDIUM); // totem of undying
         if (absorptionHealth <= 4f) entries.add(ABSORPTION_WEAK); // golden apple

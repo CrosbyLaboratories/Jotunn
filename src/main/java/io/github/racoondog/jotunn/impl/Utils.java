@@ -13,11 +13,13 @@ import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 @Environment(EnvType.CLIENT)
 public final class Utils {
+    private static final Consumer<Object> EMPTY_CONSUMER = o -> {};
     public static final BlockState VOID_AIR = Blocks.VOID_AIR.getDefaultState();
     public static final BlockState AIR = Blocks.AIR.getDefaultState();
     public static final int SIZE_BITS_X = 1 + MathHelper.floorLog2(MathHelper.smallestEncompassingPowerOfTwo(30000000));
@@ -42,11 +44,31 @@ public final class Utils {
         return Math.sqrt(squaredDistance(x1, y1, z1, x2, y2, z2));
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T> Consumer<T> emptyConsumer() {
+        return (Consumer<T>) EMPTY_CONSUMER;
+    }
+
+    /**
+     * Since mojang isn't really consistent with how attributes are stored in different objects, this method retrieves
+     * them in a somewhat clean functional way.
+     *
+     * @param attribute the attribute to target
+     * @param set the set of objects to extract attributes from
+     * @param function a {@link Function} that retrieves the attribute holders for a given object
+     * @param filter a {@link Predicate} that filters attribute holders
+     * @param extractor a {@link Function} that retrieves the actual attribute modifiers from the attribute holders
+     * @param ignoreCollisions whether to skip checking for duplicate modifier uuids
+     * @return the attribute value after factoring all attribute modifiers for a given set of objects
+     * @param <T> the object type
+     * @param <U> the attribute holder type
+     * @author Crosby
+     */
     public static <T, U> double extractAttributeValue(RegistryEntry<EntityAttribute> attribute, Iterable<T> set,
                                                       Function<T, ? extends Iterable<U>> function, Predicate<U> filter,
                                                       Function<U, EntityAttributeModifier> extractor,
                                                       boolean ignoreCollisions) {
-        EntityAttributeInstance entityAttributeInstance = new EntityAttributeInstance(attribute, o -> {});
+        EntityAttributeInstance entityAttributeInstance = new EntityAttributeInstance(attribute, emptyConsumer());
         for (T object : set) {
             for (U modifierHolder : function.apply(object)) {
                 if (filter.test(modifierHolder)) {
@@ -58,11 +80,23 @@ public final class Utils {
         }
         return entityAttributeInstance.getValue();
     }
-
+    /**
+     * Since mojang isn't really consistent with how attributes are stored in different objects, this method retrieves
+     * them in a somewhat clean functional way.
+     *
+     * @param attribute the attribute to target
+     * @param set the set of objects to extract attributes from
+     * @param filter a {@link Predicate} that filters objects
+     * @param function a {@link Function} that retrieves the attribute modifiers for a given object
+     * @param ignoreCollisions whether to skip checking for duplicate modifier uuids
+     * @return the attribute value after factoring all attribute modifiers for a given set of objects
+     * @param <T> the object type
+     * @author Crosby
+     */
     public static <T> double extractAttributeValue(RegistryEntry<EntityAttribute> attribute, Iterable<T> set,
                                                    Predicate<T> filter, Function<T, EntityAttributeModifier> function,
                                                    boolean ignoreCollisions) {
-        EntityAttributeInstance entityAttributeInstance = new EntityAttributeInstance(attribute, o -> {});
+        EntityAttributeInstance entityAttributeInstance = new EntityAttributeInstance(attribute, emptyConsumer());
         for (T object : set) {
             if (filter.test(object)) {
                 EntityAttributeModifier modifier = function.apply(object);
